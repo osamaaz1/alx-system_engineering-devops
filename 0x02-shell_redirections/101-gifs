@@ -1,2 +1,2 @@
 #!/bin/bash
-find . -type f -iname "*.gif" ! -iname ".*" -printf "%f\n" | sort -f | xargs du -b | sort -n | awk '{print $2}'
+find . -type f -name "*.gif" | awk -F/ '{print $NF}' | sed -e 's/\.gif$//' | LC_COLLATE=C sort -f -t$'\n' | tr '\n' '\0' | xargs -0 -I{} sh -c 'echo {}'
